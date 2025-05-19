@@ -1,0 +1,12 @@
+# Ignorar archivos compilados de Python
+__pycache__/
+*.py[cod]
+
+# Ignorar archivos de base de datos locales (si aplica)
+*.sqlite3
+
+# Archivos de entorno
+.env
+
+# Archivos del sistema
+.DS_Store
