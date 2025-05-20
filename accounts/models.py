@@ -28,7 +28,7 @@ class User(AbstractBaseUser, PermissionsMixin):
   # Trabajar con atributos
   @property
   def get_full_name(self):
-    return f"{self.first_name} {self.last_login}"
+    return f"{self.first_name} {self.last_name}"
   
 
   def tokens(self):
