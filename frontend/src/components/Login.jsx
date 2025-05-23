@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 
 const Login = () => {
+  const [logindData, setLoginData] = useState({
+    email: "",
+    password: ""
+  })
+  
   return (
     <>
     <div>
-      <h2>Create Account</h2>
+      <h2>Login</h2>
       <form>
         <div>
           <label>Email Address</label>

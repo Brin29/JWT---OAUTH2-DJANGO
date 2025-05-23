@@ -69,6 +69,11 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'authorization.wsgi.application'
 
+CORS_ALLOW_ALL_ORIGINS=True
+CSRF_TRUSTED_ORIGINS=[
+  "http://localhost:3000",
+  "http://localhost:5173/"
+]
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases

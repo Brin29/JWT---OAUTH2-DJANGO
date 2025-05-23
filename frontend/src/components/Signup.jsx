@@ -1,54 +1,103 @@
-import React from "react";
+import { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify"
 
 const Signup = () => {
+  const navigate = useNavigate()
+  const [formData, setFormData] = useState({
+    email: "",
+    first_name: "",
+    last_name: "",
+    password: "",
+    password2: ""
+  })
+
+  const [error, setError] = useState("")
+
+  const handleOnChange = e => {
+    setFormData({ ...formData, [e.target.name]:e.target.value })
+  }
+
+  const handleSubmit = async e => {
+    e.preventDefault()
+    if ( !email || !first_name || !last_name || !password || !password2) {
+      setError("all fields are required")
+    }
+    else {
+      const res = await axios.post("http://localhost:8000/api/v1/auth/register/", formData)
+      const response = res.data
+      console.log(response)
+      if (res.status === 201 ){
+      // redirect to verifyemail component
+      navigate("/otp/verify")
+      toast.success(response.message)
+     }
+    }
+
+  }
+
+  const {email, first_name, last_name, password, password2} = formData;
+
   return (
     <>
       <>
         <>
           <h2>Create Account</h2>
-          <form>
+          <form onSubmit={handleSubmit}>
+          <p>{error ? error : ""}</p>
             <div>
               <label>Email Address</label>
-              <input 
+              <input
                 type="text" 
                 className="email-form"
                 name="email"
+                value={email}
+                onChange={handleOnChange}
                 />
             </div>
             
             <div>
               <label>First Name</label>
-              <input 
+              <input
                 type="text" 
                 className="email-form"
                 name="first_name"
+                value={first_name}
+                onChange={handleOnChange}
                 />
             </div>
 
             <div>
               <label>Last Name</label>
-              <input 
+              <input
                 type="text" 
                 className="email-form"
                 name="last_name"
+                value={last_name}
+                onChange={handleOnChange}
                 />
             </div>
 
             <div>
               <label>Password</label>
-              <input 
+              <input
                 type="password" 
                 className="email-form"
                 name="password"
+                value={password}
+                onChange={handleOnChange}
                 />
             </div>
             
             <div>
               <label>Confirm Password</label>
-              <input 
+              <input
                 type="password" 
                 className="email-form"
-                name="confirm-password"
+                name="password2"
+                value={password2}
+                onChange={handleOnChange}
                 />
             </div>
 
