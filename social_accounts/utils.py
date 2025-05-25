@@ -4,7 +4,6 @@ from accounts.models import User
 from django.contrib.auth import authenticate
 from django.conf import settings
 from rest_framework.exceptions import AuthenticationFailed
-
 class Google():
   @staticmethod
   def validate(access_token):
