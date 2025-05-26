@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { Signup, Login, Profile, VerifyEmail, ForgetPassword } from './components'
 import { ToastContainer } from "react-toastify";
+import ResetPassword from './components/ResetPassword';
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
           <Route path='/profile' element={<Profile/>}/>
           <Route path='/otp/verify' element={<VerifyEmail/>}/>
           <Route path='/forget_password' element={<ForgetPassword/>}/>
+          <Route path='/password-reset-confirm/:uid/:token' element={<ResetPassword/>}/>
         </Routes>
       </Router>
     </>

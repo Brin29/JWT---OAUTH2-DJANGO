@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify"
 
 const Signup = () => {
@@ -12,6 +12,33 @@ const Signup = () => {
     password: "",
     password2: ""
   })
+
+  const handleSignInWithGoogle = async (response) => {
+    const payload = response.credential
+    const server_res = await axios.post("http://localhost:8000/api/v1/auth/google/", {"access_token":payload})
+    const user = {
+      "email": server_res.data.email,
+      "names": server_res.data.full_name
+    }
+    if (server_res.status === 200){
+      localStorage.setItem("user", JSON.stringify(user))
+      localStorage.setItem("access", JSON.stringify(server_res.data.access_token))
+      localStorage.setItem("refresh", JSON.stringify(server_res.data.refresh_token))
+      navigate("/profile")
+      toast.success("login succesfull")
+    }
+  }
+
+  useEffect(() => {
+    window.google.accounts.id.initialize({
+      client_id:import.meta.env.VITE_CLIENT_ID,
+      callback:handleSignInWithGoogle
+    })
+    window.google.accounts.id.renderButton(
+      document.getElementById('signInDiv'),
+      {theme:"outline", size:"large", text:"continue_with", shape:"circle", with:"280"}
+    )
+  }, [])
 
   const [error, setError] = useState("")
 
@@ -102,13 +129,13 @@ const Signup = () => {
             </div>
 
             <input type="submit" value="Submit" className="submitButton"/>
+            <Link to={'/forget_password'}>Forgot Password</Link>
           </form>
           <h3>Or</h3>
           <div>
             <button>Sign up with Github</button>
           </div>
-          <div>
-            <button>Sign up with Google</button>
+          <div id="signInDiv">
           </div>
           <div>
             <button>Sign up with Facebook</button>

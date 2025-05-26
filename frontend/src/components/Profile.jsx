@@ -1,5 +1,7 @@
 import {useEffect} from "react";
 import { useNavigate } from "react-router-dom";
+import axiosInstance from "../../utils/axiosInstance";
+import { toast } from "react-toastify"
 
 const Profile = () => {
   const navigate = useNavigate()
@@ -10,13 +12,38 @@ const Profile = () => {
     if (jwt_access === null && !user){
       navigate("/login")
     }
-  })
+    else {
+      getSomeData()
+    }
+  }, [jwt_access, user])
+
+  const refresh = JSON.parse(localStorage.getItem('refresh'))
+
+  const getSomeData = async () => {
+    const resp = await axiosInstance.get("/auth/profile/")
+    if (resp.status === 200) {
+      console.log(resp.data)
+    }
+  }
+
+
+  const handleLogout = async () => {
+    const res = await axiosInstance.post("/auth/logout/", {"refresh_token":refresh})
+  
+    if (res.status === 200){
+      localStorage.removeItem('access')
+      localStorage.removeItem('refresh')
+      localStorage.removeItem('user')
+      navigate("/login")
+      toast.success('Logout Success')
+    } 
+  }
 
   return (
     <>
       <h2>Hi {user && user.names}</h2>
       <p>Welcome to your profile</p>
-      <button>Logout</button>
+      <button onClick={handleLogout}>Logout</button>
     </>
   )
 }
