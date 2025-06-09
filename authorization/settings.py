@@ -81,9 +81,9 @@ CSRF_TRUSTED_ORIGINS=[
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'pets_name',
-            'USER': 'root',
-            'PASSWORD': '12345',
+            'NAME': 'pets_name_demo',
+            'USER':env('SQL_USER'),
+            'PASSWORD':env('SQL_PASSWORD'),
             'HOST': 'localhost',
             'PORT': '3306'
     }

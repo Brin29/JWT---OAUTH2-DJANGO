@@ -28,7 +28,7 @@ const Profile = () => {
 
 
   const handleLogout = async () => {
-    const res = await axiosInstance.post("/auth/logout/", {"refresh_token":refresh})
+    const res = await axiosInstance.post("/auth/logout/", { "refresh_token":refresh })
   
     if (res.status === 200){
       localStorage.removeItem('access')
